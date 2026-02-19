@@ -1,2 +1,0 @@
-# RIFT_HACK
-BOOM BAAM
