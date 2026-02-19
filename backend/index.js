@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 // 2. Initialize Environment Variables
 // This must be done before any routes or DB connections that use them
-dotenv.config();
+
 
 // 3. MVC Module Imports
 const { connectDB } = require('./config/db');
