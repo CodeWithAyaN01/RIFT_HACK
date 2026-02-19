@@ -6,3 +6,24 @@
 // You only care about the 6 Highway Checkpoints (the genes). The Librarian (the parser) doesn't read 
 // the whole book; they just run their finger down the page, ignore the headers (#), and only stop when they see the word "CYP2D6" or "TPMT". They rip those 
 // lines out and hand them to you.
+const fs = require('fs');
+
+const extractCPICGenes = (filePath) => {
+    try {
+        const content = fs.readFileSync(filePath, 'utf8');
+        const targetGenes = ['CYP2D6', 'CYP2C19', 'CYP2C9', 'SLCO1B1', 'TPMT', 'DPYD'];
+        
+        const lines = content.split('\n');
+        const filtered = lines.filter(line => {
+            if (line.startsWith('#')) return false; // Skip headers
+            return targetGenes.some(gene => line.includes(gene));
+        });
+
+        return filtered.join('\n');
+    } catch (err) {
+        console.error("VCF Parsing Error:", err);
+        return "";
+    }
+};
+
+module.exports = { extractCPICGenes };

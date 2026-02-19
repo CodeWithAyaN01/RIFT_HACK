@@ -11,3 +11,32 @@
 // The "Form-Filler" Pattern (Generation): Use a strict JSON schema in your prompt so your code can read the AI's answer without crashing.
 
 // The "Warehouse" Pattern (Multer): Use middleware to handle "Heavy Cargo" (files) separate from "Letters" (text data).
+const express = require('express');
+const router = express.Router();
+const multer = require('multer');
+const fs = require('fs');
+const { extractCPICGenes } = require('../services/vcfParser');
+const { analyzeWithGemini } = require('../services/geminiService');
+
+const upload = multer({ dest: 'uploads/' });
+
+router.post('/check', upload.single('vcfFile'), async (req, res) => {
+    try {
+        const drug = req.body.drug;
+        const filePath = req.file.path;
+
+        // 1. Get Genes
+        const genes = extractCPICGenes(filePath);
+        console.log("Extracted Text Length:", genes.length);
+        fs.unlinkSync(filePath); // Delete file after reading
+
+        // 2. Get AI Analysis
+        const result = await analyzeWithGemini(genes, drug);
+        
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+module.exports = router;

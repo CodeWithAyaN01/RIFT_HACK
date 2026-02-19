@@ -1,13 +1,10 @@
-// server.js (Main Entry Point)
+require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
+const analysisRoutes = require('./routes/analysisRoutes');
 const app = express();
-
-// 1. Import your separate route files
-const analysisRoutes = require('./routes/analysisRoutes'); // YOUR FILE
-// const userRoutes = require('./routes/userRoutes');         // THEIR FILE
-
-// 2. Map them to prefixes
+app.use(cors());
+app.use(express.json());
 app.use('/api/analysis', analysisRoutes);
-// app.use('/api/users', userRoutes);
 
-app.listen(3000, () => console.log("Server running!"));
+app.listen(3000, () => console.log('🚀 AI Engine Ready on Port 3000'));
