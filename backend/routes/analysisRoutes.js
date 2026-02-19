@@ -12,13 +12,16 @@
 
 // The "Warehouse" Pattern (Multer): Use middleware to handle "Heavy Cargo" (files) separate from "Letters" (text data).
 const express = require('express');
+const os = require('os');
 const router = express.Router();
+
+
 const multer = require('multer');
 const fs = require('fs');
 const { extractCPICGenes } = require('../services/vcfParser');
 const { analyzeWithGemini } = require('../services/geminiService');
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: os.tmpdir() });
 
 router.post('/check', upload.single('vcfFile'), async (req, res) => {
     try {
