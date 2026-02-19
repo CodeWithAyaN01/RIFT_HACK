@@ -4,10 +4,13 @@
 // HOW it works (The Analogy): You hand the 
 // Librarian's notes to a world-class Geneticist. You don't just ask, "What is this?" You give them a Strict Questionnaire (the Prompt). You tell them: "Look at these notes. Fill out this JSON form. 
 // Do not add extra words. Use these exact labels." The "Generation" part is just the AI filling out your form based on the notes you provided.
+
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
+
 const analyzeWithGemini = async (geneticText, drugName) => {
-    const genAI = new GoogleGenerativeAI("AIzaSyBH7A9jVxm5bnqZP-rJunwXwlNqSmimncc");
+    
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI);
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt =`
