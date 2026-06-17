@@ -1,8 +1,9 @@
+# ML 4 Simple
 import pandas as pd
 
 def find_s_algorithm(file_path):
 
-    data = pd.read_csv("training_data.csv")
+    data = pd.read_csv(file_path)
 
     print("Training data:")
     print(data)
@@ -25,7 +26,7 @@ def find_s_algorithm(file_path):
 
     return hypothesis
 
-file_path = 'training_data.csv'
+file_path = 'play_tennis.csv'
 
 hypothesis = find_s_algorithm(file_path)
 
